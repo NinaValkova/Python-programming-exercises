@@ -1,6 +1,6 @@
 n = int(input())
 
-word = input()
+unique_word = input()
 
 words = []
 for i in range(0, n, 1):
@@ -10,7 +10,7 @@ for i in range(0, n, 1):
 certain_words=[]
 
 for i in range(0, n, 1):
-    if word in words[i]:
+    if unique_word in words[i]:
         certain_words.append(words[i])
 
 print(words)
