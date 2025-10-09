@@ -1,0 +1,70 @@
+from topping import Topping
+
+
+class Pizza:
+    def __init__(self, name, dough, max_number_of_toppings):
+        self.name = name
+        self.dough = dough
+        self.max_number_of_toppings = max_number_of_toppings
+        self.toppings = dict()
+
+    @property
+    def name(self):
+        return self.__name
+
+    @name.setter
+    def name(self, name):
+        if len(name) == 0:
+            raise ValueError("The name cannot be an empty string")
+
+        self.__name = name
+
+    @property
+    def dough(self):
+        return self.__dough
+
+    @dough.setter
+    def dough(self, dough):
+        if dough is None:
+            raise ValueError("You should add dough to the pizza")
+        self.__dough = dough
+
+    @property
+    def max_number_of_toppings(self):
+        return self.__max_number_of_toppings
+
+    @max_number_of_toppings.setter
+    def max_number_of_toppings(self, max_number_of_toppings):
+        if max_number_of_toppings <= 0:
+            raise ValueError(
+                "The maximum number of toppings cannot be less or equal to zero"
+            )
+        self.__max_number_of_toppings = max_number_of_toppings
+
+    @property
+    def toppings(self):
+        return self.__toppings
+
+    @toppings.setter
+    def toppings(self, toppings):
+        self.__toppings = toppings
+
+    def add_topping(self, topping: Topping):
+        toppings_count = len(self.toppings)
+        if self.max_number_of_toppings <= toppings_count:
+            raise ValueError("Not enough space for another topping")
+
+        # self.toppings is a dictionary where keys are strings (like "Tomato").
+        # But topping here is a Topping object.
+        # check by topping name, not object
+        if topping.topping_type in self.toppings:
+            self.toppings[topping.topping_type] += topping.weight
+        else:
+            self.toppings[topping.topping_type] = topping.weight
+
+    def calculate_total_weight(self):
+        toppings_weight = 0
+        for topping in self.toppings.values():
+            toppings_weight += topping
+
+        return self.dough.weight + toppings_weight
